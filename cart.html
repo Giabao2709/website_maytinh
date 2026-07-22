@@ -16,18 +16,31 @@
             --border-color: #E2E8F0;
             --red-price: #DC2626;
         }
+        
+        /* Chuyển body thành flex-column để đẩy Footer xuống tận cùng */
         body { 
             background-color: var(--bg-body); 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
             color: #333; 
             margin: 0;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* --- BỐ CỤC CHUNG & SIDEBAR TRÁI --- */
-        .wrapper { display: flex; min-height: 100vh; flex-direction: column;}
+        .wrapper { display: flex; flex: 1; }
         
-        .sidebar { background-color: var(--dark-header); color: #fff; z-index: 1050; }
+        /* Ép Bootstrap đổi màu nền Sidebar bằng biến --bs-offcanvas-bg */
+        .sidebar { 
+            background-color: var(--dark-header) !important; 
+            --bs-offcanvas-bg: var(--dark-header) !important; 
+            color: #fff; 
+            z-index: 1050; 
+            box-shadow: 2px 0 15px rgba(0,0,0,0.1); 
+        }
+
         .sidebar-brand { display: flex; align-items: center; gap: 10px; color: var(--primary-yellow) !important; font-size: 1.4rem; font-weight: 900; text-decoration: none; margin-bottom: 30px; padding: 0 5px; transition: 0.3s; }
         .sidebar-brand:hover { transform: scale(1.05); }
         .sidebar-brand-icon { background: var(--primary-yellow); color: var(--dark-header); padding: 5px 8px; border-radius: 8px; font-size: 1.2rem; }
@@ -93,7 +106,7 @@
         .btn-back-shop:hover { background: #084298; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10, 88, 202, 0.3); color: #fff;}
 
         /* --- FOOTER CẬP NHẬT MỚI --- */
-        .about-section { background: var(--dark-header); }
+        .about-section { background: var(--dark-header); border-top: 3px solid var(--primary-yellow); }
         .footer-dark { background-color: #3E3832; color: #e5e7eb; text-align: center; }
         .feat-item { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
         .feat-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: var(--primary-yellow); }
@@ -103,12 +116,12 @@
            ========================================= */
         @media (min-width: 992px) {
             .wrapper { flex-direction: row; }
-            .sidebar { width: 260px; position: fixed; top: 0; left: 0; height: 100vh; padding: 20px 15px; }
+            .sidebar { width: 260px; position: sticky; top: 0; height: 100vh; padding: 20px 15px; }
             .sidebar .offcanvas-body { padding: 0; overflow-y: visible; }
-            .main-content { margin-left: 260px; padding: 40px 40px 0 40px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh;}
+            .main-content { flex: 1; padding: 40px 40px 40px 40px; max-width: calc(100% - 260px); }
             
-            .about-section { padding: 50px 40px; margin-top: auto; margin-left: -40px; margin-right: -40px; }
-            .footer-dark { padding: 30px 0 15px 0; margin-left: -40px; margin-right: -40px; }
+            .about-section { padding: 50px 40px; width: 100%; }
+            .footer-dark { padding: 30px 0 15px 0; width: 100%; }
         }
 
         /* =========================================
@@ -116,13 +129,13 @@
            ========================================= */
         @media (max-width: 991px) {
             .sidebar.offcanvas-start { width: 280px; }
-            .main-content { margin-left: 0; padding: 20px 15px 0 15px; width: 100%; display: flex; flex-direction: column; min-height: calc(100vh - 70px);}
+            .main-content { flex: 1; padding: 20px 15px 30px 15px; width: 100%; }
             
             .page-title { font-size: 1.6rem; }
             .cart-header { flex-direction: column; align-items: flex-start; gap: 15px; }
             
-            .about-section { padding: 40px 20px; margin-top: auto; margin-left: -15px; margin-right: -15px; }
-            .footer-dark { padding: 30px 0 15px 0; margin-left: -15px; margin-right: -15px; }
+            .about-section { padding: 40px 20px; width: 100%; }
+            .footer-dark { padding: 30px 0 15px 0; width: 100%; }
         }
     </style>
 </head>
@@ -135,9 +148,11 @@
         </button>
     </div>
 
+    <!-- Wrapper bọc Sidebar và Nội dung chính -->
     <div class="wrapper">
         
-        <div class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="cartSidebar">
+        <!-- Cập nhật style trực tiếp ép màu xanh đậm -->
+        <div class="sidebar offcanvas-lg offcanvas-start" tabindex="-1" id="cartSidebar" style="background-color: #0B1930 !important;">
             
             <div class="offcanvas-header d-lg-none border-bottom border-secondary mb-3">
                 <h5 class="offcanvas-title mb-0" style="color: var(--primary-yellow); font-weight: 900;">
@@ -146,7 +161,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#cartSidebar"></button>
             </div>
 
-            <div class="offcanvas-body d-flex flex-column h-100 flex-grow-1 p-3 p-lg-0">
+            <div class="offcanvas-body d-flex flex-column h-100 p-3 p-lg-0">
                 <a href="index.html" class="sidebar-brand d-none d-lg-flex">
                     <i class="fa-solid fa-laptop-code sidebar-brand-icon"></i> Khoavang.vn
                 </a>
@@ -155,14 +170,15 @@
                     <li class="nav-item"><a href="admin.html" class="nav-link"><i class="fa-solid fa-user-pen"></i> Khách hàng</a></li>
                     <li class="nav-item"><a href="shop.html" class="nav-link"><i class="fa-solid fa-desktop"></i> Sản phẩm</a></li>
                     <li class="nav-item"><a href="cart.html" class="nav-link active"><i class="fa-solid fa-cart-shopping"></i> Đơn hàng</a></li>
-                    <li class="nav-item"><a href="order.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử đơn hàng</a></li>
-                    <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Tra cứu bảo hành</a></li>
+                    <li class="nav-item"><a href="order.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử</a></li>
+                    <li class="nav-item"><a href="warranty.html" class="nav-link"><i class="fa-solid fa-shield-halved"></i> Bảo hành</a></li>
                     <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fa-solid fa-headset"></i> Hỗ trợ</a></li>
                 </ul>
 
-                <ul class="sidebar-nav mt-auto" style="flex-grow: 0; margin-bottom: 20px;">
+                <!-- Nút Đăng xuất được căn chỉnh lại giống hệt Admin (thêm gạch trên, cách điệu) -->
+                <ul class="sidebar-nav mt-4" style="flex-grow: 0; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-bottom: 20px;">
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-danger" onclick="confirmLogout(event)">
+                        <a href="#" class="nav-link text-danger fw-bold" onclick="confirmLogout(event)">
                             <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
                         </a>
                     </li>
@@ -244,43 +260,47 @@
                 <a href="shop.html" class="btn-back-shop"><i class="fa-solid fa-fire me-2 text-warning"></i> SĂN DEAL NGAY</a>
             </div>
 
-            <div class="about-section">
-                <div class="container-fluid">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 mb-4 mb-lg-0">
-                            <h2 style="color: var(--primary-yellow); font-weight: 900; margin-bottom: 20px; font-size: 2rem;">Về Khoavang.vn</h2>
-                            <p style="color: #cbd5e1; line-height: 1.8; font-size: 1.05rem; margin-bottom: 30px;">Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, <strong>Khoavang.vn</strong> tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.</p>
-                        </div>
-                        <div class="col-lg-5 offset-lg-1">
-                            <div class="feat-item">
-                                <div class="feat-icon"><i class="fa-solid fa-award"></i></div>
-                                <div>
-                                    <h5 style="font-weight: 700; margin: 0 0 5px 0; font-size: 1rem; color: #fff;">Sản phẩm chính hãng 100%</h5>
-                                    <p style="color: #94A3B8; margin: 0; font-size: 0.85rem;">Đầy đủ giấy tờ CO, CQ. Nguyên seal từ nhà sản xuất.</p>
-                                </div>
+        </div> <!-- Kết thúc main-content -->
+    </div> <!-- Kết thúc wrapper -->
+
+    <!-- FOOTER ĐƯỢC ĐƯA RA NGOÀI ĐỂ FULL 100% CHIỀU NGANG -->
+    <div class="footer-container">
+        <div class="about-section">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <h2 style="color: var(--primary-yellow); font-weight: 900; margin-bottom: 20px; font-size: 2rem;">Về Khoavang.vn</h2>
+                        <p style="color: #cbd5e1; line-height: 1.8; font-size: 1.05rem; margin-bottom: 30px;">Được thành lập với sứ mệnh mang đến những giải pháp công nghệ tối ưu nhất, <strong>Khoavang.vn</strong> tự hào là hệ thống bán lẻ các dòng Laptop Gaming, Máy trạm (Workstation), MacBook và linh kiện Hi-End uy tín hàng đầu tại Việt Nam.</p>
+                    </div>
+                    <div class="col-lg-5 offset-lg-1">
+                        <div class="feat-item">
+                            <div class="feat-icon"><i class="fa-solid fa-award"></i></div>
+                            <div>
+                                <h5 style="font-weight: 700; margin: 0 0 5px 0; font-size: 1rem; color: #fff;">Sản phẩm chính hãng 100%</h5>
+                                <p style="color: #94A3B8; margin: 0; font-size: 0.85rem;">Đầy đủ giấy tờ CO, CQ. Nguyên seal từ nhà sản xuất.</p>
                             </div>
-                            <div class="feat-item">
-                                <div class="feat-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-                                <div>
-                                    <h5 style="font-weight: 700; margin: 0 0 5px 0; font-size: 1rem; color: #fff;">Bảo hành siêu tốc</h5>
-                                    <p style="color: #94A3B8; margin: 0; font-size: 0.85rem;">Hỗ trợ đổi trả trong 15 ngày đầu.</p>
-                                </div>
+                        </div>
+                        <div class="feat-item">
+                            <div class="feat-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                            <div>
+                                <h5 style="font-weight: 700; margin: 0 0 5px 0; font-size: 1rem; color: #fff;">Bảo hành siêu tốc</h5>
+                                <p style="color: #94A3B8; margin: 0; font-size: 0.85rem;">Hỗ trợ đổi trả trong 15 ngày đầu.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <footer class="footer-dark text-center">
-                <div class="container">
-                    <h5 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 5px;">Khoavang.vn</h5>
-                    <p class="small mb-0" style="color: #9ca3af;">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
-                </div>
-            </footer>
-
         </div>
+
+        <footer class="footer-dark text-center">
+            <div class="container">
+                <h5 style="color: var(--primary-yellow); font-weight: 800; margin-bottom: 5px;">Khoavang.vn</h5>
+                <p class="small mb-0" style="color: #9ca3af;">© 2026 Khoavang.vn - High-End Hardware Retailer.</p>
+            </div>
+        </footer>
     </div>
 
+    <!-- Modal xác nhận đăng xuất -->
     <div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="border-radius: 15px; border: none;">
@@ -292,7 +312,8 @@
                     <p class="text-muted mb-4 fs-5">Bạn có chắc chắn muốn thoát khỏi hệ thống không?</p>
                     <div class="d-flex justify-content-center gap-3">
                         <button type="button" class="btn btn-light border px-5 py-2 fw-bold fs-6" data-bs-dismiss="modal">Hủy</button>
-                        <a href="#" onclick="logout(event)" class="btn btn-danger px-4 py-2 fw-bold fs-6">Đăng xuất</a>
+                        <!-- Đã sửa href trỏ về login.html và gọi đúng hàm logoutUser() -->
+                        <a href="login.html" onclick="logoutUser()" class="btn btn-danger px-4 py-2 fw-bold fs-6">Đăng xuất</a>
                     </div>
                 </div>
             </div>
@@ -307,6 +328,11 @@
             event.preventDefault(); 
             var myModal = new bootstrap.Modal(document.getElementById('logoutModal'));
             myModal.show();
+        }
+
+        // HÀM ĐĂNG XUẤT - Đồng bộ với Admin, chỉ xóa thông tin phiên hiện tại, GIỮ LẠI TÀI KHOẢN
+        function logoutUser() {
+            localStorage.removeItem('khoavang_user');
         }
 
         // HÀM XỬ LÝ DỮ LIỆU GIỎ HÀNG
