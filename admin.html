@@ -315,10 +315,11 @@
             }, 3000);
         }
 
-        // HÀM ĐĂNG XUẤT - Bổ sung tính năng xóa trắng dữ liệu
+        // HÀM ĐĂNG XUẤT - Đã sửa lại để không xóa mất tài khoản của bạn
         function logoutUser() {
-            // Xóa sạch toàn bộ dữ liệu đã được lưu trữ của người dùng
-            localStorage.clear();
+            // Chỉ xóa thông tin của phiên đăng nhập hiện tại (nếu trang login của bạn có dùng biến này)
+            localStorage.removeItem('isLoggedIn');
+
         }
 
         function confirmLogout(event) {
