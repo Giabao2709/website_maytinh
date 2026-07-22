@@ -33,113 +33,31 @@
             padding: 15px 0;
             flex-shrink: 0;
         }
-        .logo-text {
-            color: var(--primary-yellow);
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-decoration: none;
-        }
-        .header-links {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 1;
-        }
-        .header-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            position: relative;
-        }
-        .header-links a:hover {
-            color: var(--primary-yellow);
-        }
-        .header-links a.text-red-custom {
-            color: #e30019 !important;
-        }
+        .logo-text { color: var(--primary-yellow); font-size: 1.8rem; font-weight: 800; text-decoration: none; }
+        .header-links { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
+        .header-links a { color: #fff; text-decoration: none; margin: 0 15px; font-weight: 600; font-size: 0.95rem; position: relative; }
+        .header-links a:hover { color: var(--primary-yellow); }
+        .header-links a.text-red-custom { color: #e30019 !important; }
         
-        .header-login-btn {
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-        .header-login-btn i {
-            font-size: 1.2rem;
-        }
-        .header-login-btn:hover {
-            color: var(--primary-yellow);
-        }
+        .header-login-btn { color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.95rem; transition: color 0.2s; }
+        .header-login-btn i { font-size: 1.2rem; }
+        .header-login-btn:hover { color: var(--primary-yellow); }
 
         /* --- KHÔNG GIAN CHÍNH --- */
-        .main-wrapper {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+        .main-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
 
         /* KHUNG FORM QUÊN MẬT KHẨU Ở GIỮA */
-        .forgot-pwd-container {
-            background: #fff;
-            border-radius: 12px;
-            padding: 40px 50px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 550px;
-            border: 1px solid #eee;
-        }
-
-        .form-control {
-            padding: 12px 15px;
-            font-size: 0.95rem;
-            background-color: #F8FAFC;
-            border: 1px solid #E2E8F0;
-        }
-        .form-control:focus { 
-            border-color: var(--primary-yellow); 
-            box-shadow: none; 
-            background-color: #fff;
-        }
-        .form-label {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #64748B;
-            text-transform: uppercase;
-        }
-        .btn-warning-custom {
-            background-color: var(--primary-yellow);
-            color: var(--dark-navy);
-            font-weight: 700;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 10px;
-        }
+        .forgot-pwd-container { background: #fff; border-radius: 12px; padding: 40px 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 100%; max-width: 550px; border: 1px solid #eee; }
+        
+        .form-control { padding: 12px 15px; font-size: 0.95rem; background-color: #F8FAFC; border: 1px solid #E2E8F0; }
+        .form-control:focus { border-color: var(--primary-yellow); box-shadow: none; background-color: #fff; }
+        .form-label { font-size: 0.75rem; font-weight: 700; color: #64748B; text-transform: uppercase; }
+        .btn-warning-custom { background-color: var(--primary-yellow); color: var(--dark-navy); font-weight: 700; border: none; padding: 12px; border-radius: 6px; margin-top: 10px; }
 
         /* --- FOOTER --- */
-        .custom-footer {
-            background-color: var(--footer-bg);
-            padding: 20px 0 10px 0;
-            flex-shrink: 0;
-            color: #444;
-        }
-        .footer-links a {
-            color: #555;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-        .footer-links a:hover {
-            color: var(--primary-yellow);
-        }
+        .custom-footer { background-color: var(--footer-bg); padding: 20px 0 10px 0; flex-shrink: 0; color: #444; }
+        .footer-links a { color: #555; text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--primary-yellow); }
 
         /* RESPONSIVE */
         @media (max-width: 991px) {
@@ -155,7 +73,6 @@
     <!-- HEADER -->
     <header class="custom-header">
         <div class="container-fluid px-5 d-flex justify-content-between align-items-center">
-            
             <!-- Link về trang chủ -->
             <a href="index.html" class="logo-text">Khoavang.vn</a>
             
@@ -176,7 +93,6 @@
                     <span>Đăng nhập / Đăng ký</span>
                 </a>
             </div>
-
         </div>
     </header>
 
@@ -298,12 +214,12 @@
             let userIndex = usersArray.findIndex(u => u.username === usernameInput || u.email === usernameInput);
 
             if (userIndex !== -1) {
-                // Nếu tìm thấy -> Cập nhật mật khẩu mới
+                // Nếu tìm thấy -> Cập nhật mật khẩu mới đè lên mật khẩu cũ
                 usersArray[userIndex].password = newPass;
                 localStorage.setItem('tempDatabase', JSON.stringify(usersArray));
                 
                 msgBox.className = 'alert alert-success py-2';
-                msgBox.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Đổi mật khẩu thành công! Bạn có thể quay lại đăng nhập.';
+                msgBox.innerHTML = '<i class="fa-solid fa-circle-check me-1"></i> Đổi mật khẩu thành công! Hãy dùng mật khẩu mới để đăng nhập.';
                 msgBox.classList.remove('d-none');
                 
                 // Reset form sau khi đổi thành công
@@ -311,7 +227,7 @@
             } else {
                 // Nếu không tìm thấy tài khoản
                 msgBox.className = 'alert alert-danger py-2';
-                msgBox.innerHTML = '<i class="fa-solid fa-circle-xmark me-1"></i> Không tìm thấy tài khoản hoặc email này!';
+                msgBox.innerHTML = '<i class="fa-solid fa-circle-xmark me-1"></i> Không tìm thấy tài khoản hoặc email này trong hệ thống!';
                 msgBox.classList.remove('d-none');
             }
         });
