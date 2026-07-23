@@ -27,7 +27,6 @@
         .header-links a { color: #ffffff !important; text-decoration: none; margin: 0 15px; font-weight: 500; font-size: 0.95rem; cursor: pointer; transition: 0.2s; padding-bottom: 5px; }
         .header-links a:hover, .header-links a.active { color: var(--primary-yellow) !important; border-bottom: 2px solid var(--primary-yellow); }
         
-        /* Đã sửa màu chữ Khuyến mãi thành đỏ */
         .header-links a.link-deal { color: var(--red-price) !important; }
         
         .search-bar-header { background: #1E2B45; border: 1px solid #2A3B5C; border-radius: 20px; padding: 6px 15px; display: flex; align-items: center; width: 300px; }
@@ -120,8 +119,9 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
                 <div class="header-icons">
-                    <a href="admin.html"><i class="fa-regular fa-user"></i></a>
-                    <a href="cart.html">
+                    <!-- Áp dụng kiểm tra đăng nhập cho Header Icon -->
+                    <a href="javascript:void(0)" onclick="requireLoginDetail(event, 'admin.html')"><i class="fa-regular fa-user"></i></a>
+                    <a href="javascript:void(0)" onclick="requireLoginDetail(event, 'cart.html')">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span class="cart-badge" id="header-cart-badge">0</span>
                     </a>
@@ -229,7 +229,7 @@
         </div>
     </div>
 
-    <!-- THÊM MỚI: FOOTER -->
+    <!-- FOOTER -->
     <footer class="custom-footer">
         <div class="container">
             <div class="row g-5">
@@ -325,6 +325,18 @@
         ];
 
         let currentProduct = null;
+
+        // KIỂM TRA ĐĂNG NHẬP (Chặn click ở icon trên Header)
+        function requireLoginDetail(event, targetUrl) {
+            event.preventDefault();
+            let isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                alert('Mời bạn đăng nhập để thực hiện chức năng này!');
+                window.location.href = 'login.html';
+            } else {
+                window.location.href = targetUrl;
+            }
+        }
 
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -428,7 +440,18 @@
             }
         }
 
+        // HÀM CHÍNH: Thêm vào giỏ hàng (Đã cập nhật logic kiểm tra đăng nhập)
         function addCurrentToCart() {
+            let isLoggedIn = localStorage.getItem('isLoggedIn');
+            
+            // Nếu chưa đăng nhập -> Hiển thị cảnh báo và chuyển trang
+            if (!isLoggedIn) {
+                alert('Mời bạn đăng nhập để thực hiện chức năng này!');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Nếu đã đăng nhập -> Xử lý lưu giỏ hàng
             if(!currentProduct) return;
             let qtyToAdd = parseInt(document.getElementById('detail-qty').value);
             
@@ -451,6 +474,7 @@
             localStorage.setItem('khoavang_cartData', JSON.stringify(cartData));
             updateCartBadge();
 
+            // Hiện Toast thông báo thêm thành công
             const toast = document.getElementById('cart-toast');
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2000);
